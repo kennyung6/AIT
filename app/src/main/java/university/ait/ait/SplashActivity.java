@@ -22,7 +22,7 @@ public class SplashActivity extends Activity {
                 // TODO Auto-generated method stub
                 try {
                     sleep(6000);
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     finish();
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block

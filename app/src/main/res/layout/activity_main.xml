@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:tag="main activity layout container">
+    android:tag="main activity layout container"
+    tools:context="${relativePackage}.${activityClass}">
 
     <include layout="@layout/toolbar" />
 

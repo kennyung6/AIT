@@ -1,6 +1,7 @@
 package university.ait.ait;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -14,12 +15,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.Button;
+import android.widget.TextView;
+
 import java.util.ArrayList;
+
+import university.ait.ait.app.AppController;
+import university.ait.ait.app.SessionManager;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    //Login & Registration Items Declaration
+    TextView txtName;
+    TextView txtEmail;
+    Button btnLogout;
+
+    private SessionManager session;
 
     //Navigation Drawer Declarations
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -39,6 +51,32 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Login & Registration On CreateView
+      //  txtName = (TextView) findViewById(R.id.name);
+       // txtEmail = (TextView) findViewById(R.id.email);
+       // btnLogout = (Button) findViewById(R.id.btnLogout);
+
+        session = new SessionManager(getApplicationContext());
+
+        if (!session.isLoggedIn()) {
+            logoutUser();
+        }
+
+        String name = AppController.getString(getApplicationContext(), "name");
+        String email = AppController.getString(getApplicationContext(), "email");
+        txtName.setText(name);
+        txtEmail.setText(email);
+
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                logoutUser();
+            }
+        });
+
 
     //Navigation Drawer OnCreate View Declaration (Start)
         nitView();
@@ -165,6 +203,14 @@ public class MainActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggls
         actionBarDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    //Logout Declaration
+    private void logoutUser() {
+        session.setLogin(false);
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }
